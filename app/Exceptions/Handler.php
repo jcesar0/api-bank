@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Throwable;
@@ -42,6 +43,15 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof AuthenticationException)
+        {
+            return new JsonResponse([
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ], 401);
+        }
+
         return new JsonResponse([
             'error' => [
                 'message' => $exception->getMessage(),
