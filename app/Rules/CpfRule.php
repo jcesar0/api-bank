@@ -8,7 +8,6 @@ class CpfRule implements Rule
 {
     public function passes($attribute, $value): bool
     {
-        $value = str_replace([',', '.', '-', ' ', '/'], '', $value);
         if (blank($value) || strlen($value) !== 11)
         {
             return false;
