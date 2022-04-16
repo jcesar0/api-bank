@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\AccountType;
+use App\Support\Generate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -19,9 +21,10 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'cpf' => (string) random_int(11111111111, 99999999999),
+            'password' => 'senhapoderosa',
+            'account_number' => Generate::generateAccountNumber(),
+            'account_type' => array_rand(array_column(AccountType::cases(), 'value')),
             'remember_token' => Str::random(10),
         ];
     }
